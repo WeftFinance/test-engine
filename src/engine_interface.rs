@@ -260,7 +260,7 @@ impl EngineInterface {
             },
             // pre_allocated_addresses,
             btreeset!(NonFungibleGlobalId::from_public_key(
-                &default_account.public_key()
+                default_account.public_key()
             )),
         );
 

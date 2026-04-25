@@ -139,13 +139,21 @@ macro_rules! global_package_from_binary {
                         &wasm_path, err
                     )
                 });
-                let definition = std::fs::read(&definition_path).unwrap_or_else(|err| {
+                let mut definition_bytes = std::fs::read(&definition_path).unwrap_or_else(|err| {
                     panic!(
                         "Failed to read package definition from path {:?} - {:?}",
                         &definition_path, err
                     )
                 });
-                let definition = manifest_decode(&definition).unwrap_or_else(|err| {
+
+                // Handle manifest-encoded .rpd files (prefix 0x4d) by replacing
+                // the prefix with the scrypto SBOR prefix (0x5c) that scrypto_decode expects.
+                // PackageDefinition uses only standard SBOR types, so the payload is identical.
+                if !definition_bytes.is_empty() && definition_bytes[0] == 0x4d {
+                    definition_bytes[0] = 0x5c;
+                }
+
+                let definition: PackageDefinition = scrypto_decode(&definition_bytes).unwrap_or_else(|err| {
                     panic!(
                         "Failed to parse package definition from path {:?} - {:?}",
                         &definition_path, err
@@ -203,13 +211,21 @@ macro_rules! global_package_advanced {
                             &wasm_path, err
                         )
                     });
-                    let definition = std::fs::read(&definition_path).unwrap_or_else(|err| {
+                    let mut definition_bytes = std::fs::read(&definition_path).unwrap_or_else(|err| {
                         panic!(
                             "Failed to read package definition from path {:?} - {:?}",
                             &definition_path, err
                         )
                     });
-                    let definition = manifest_decode(&definition).unwrap_or_else(|err| {
+
+                    // Handle manifest-encoded .rpd files (prefix 0x4d) by replacing
+                    // the prefix with the scrypto SBOR prefix (0x5c) that scrypto_decode expects.
+                    // PackageDefinition uses only standard SBOR types, so the payload is identical.
+                    if !definition_bytes.is_empty() && definition_bytes[0] == 0x4d {
+                        definition_bytes[0] = 0x5c;
+                    }
+
+                    let definition: PackageDefinition = scrypto_decode(&definition_bytes).unwrap_or_else(|err| {
                         panic!(
                             "Failed to parse package definition from path {:?} - {:?}",
                             &definition_path, err

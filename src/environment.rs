@@ -430,6 +430,12 @@ pub struct EnvTuple {
     elements: Vec<Box<dyn ToValue>>,
 }
 
+impl Default for EnvTuple {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl EnvTuple {
     pub fn from_vec(elements: Vec<Box<dyn ToValue>>) -> Self {
         Self { elements }

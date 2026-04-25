@@ -453,14 +453,13 @@ impl<'a> CallBuilder<'a> {
     }
 
     fn output_logs(receipt: &TransactionReceipt) {
-        if let TransactionResult::Commit(commit_result) = &receipt.result {
-            if !commit_result.application_logs.is_empty() {
+        if let TransactionResult::Commit(commit_result) = &receipt.result
+            && !commit_result.application_logs.is_empty() {
                 println!("\nApplication logs:");
                 for (level, message) in &commit_result.application_logs {
                     println!("| [{level}]: {message}")
                 }
             }
-        }
     }
 
     fn output_log_title(title: &str) {

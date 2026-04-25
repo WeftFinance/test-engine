@@ -89,7 +89,7 @@ impl GetReturn for TransactionReceipt {
                 TransactionOutcome::Success(output) => T::from(
                     output
                         .get(index)
-                        .expect(&format!("No return at index {}", index))
+                        .unwrap_or_else(|| panic!("No return at index {}", index))
                         .clone(),
                 ),
 

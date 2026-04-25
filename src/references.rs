@@ -27,13 +27,13 @@ impl ReferenceName for String {
     }
 }
 
-impl<'a> ReferenceName for &'a String {
+impl ReferenceName for &String {
     fn format(&self) -> String {
         (*self).format()
     }
 }
 
-impl<'a> ReferenceName for &'a str {
+impl ReferenceName for &str {
     fn format(&self) -> String {
         self.to_string().format()
     }
@@ -51,7 +51,7 @@ impl ComponentReference for ComponentAddress {
     }
 }
 
-impl<'a> ComponentReference for &'a ComponentAddress {
+impl ComponentReference for &ComponentAddress {
     fn address(&self, _test_engine: &TestEngine) -> ComponentAddress {
         **self
     }
@@ -68,7 +68,7 @@ impl ResourceReference for ResourceAddress {
     }
 }
 
-impl<'a> ResourceReference for &'a ResourceAddress {
+impl ResourceReference for &ResourceAddress {
     fn address(&self, _test_engine: &TestEngine) -> ResourceAddress {
         **self
     }
@@ -86,7 +86,7 @@ impl GlobalReference for ResourceAddress {
     }
 }
 
-impl<'a> GlobalReference for &'a ResourceAddress {
+impl GlobalReference for &ResourceAddress {
     fn address(&self, _test_engine: &TestEngine) -> GlobalAddress {
         GlobalAddress::from(**self)
     }

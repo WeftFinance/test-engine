@@ -21,7 +21,7 @@ impl Account {
     }
 
     pub fn proof(&self) -> NonFungibleGlobalId {
-        NonFungibleGlobalId::from_public_key(&self.public_key)
+        NonFungibleGlobalId::from_public_key(self.public_key)
     }
 
     pub fn public_key(&self) -> PublicKey {

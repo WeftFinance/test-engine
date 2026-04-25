@@ -40,14 +40,14 @@ pub trait SimpleMethodCaller {
 
 pub trait ComplexMethodCaller {
     /// Returns a new call builder.
-    fn call_builder(&mut self) -> CallBuilder;
+    fn call_builder(&mut self) -> CallBuilder<'_>;
 
     /// Returns a call builder with an initial method call.
     ///
     /// # Arguments
     /// * `method_name`: name of the method.
     /// * `args`: environment arguments to call the method.
-    fn call(&mut self, method_name: &str, args: Vec<Box<dyn ToValue>>) -> CallBuilder;
+    fn call(&mut self, method_name: &str, args: Vec<Box<dyn ToValue>>) -> CallBuilder<'_>;
 
     /// Returns a call builder with an initial method call to a given entity.
     ///
@@ -60,7 +60,7 @@ pub trait ComplexMethodCaller {
         global_address: G,
         method_name: &str,
         args: Vec<Box<dyn ToValue>>,
-    ) -> CallBuilder;
+    ) -> CallBuilder<'_>;
 
     /// Returns a call builder with an initial method call with a given admin badge.
     ///
@@ -73,11 +73,11 @@ pub trait ComplexMethodCaller {
         method_name: &str,
         admin_badge: R,
         args: Vec<Box<dyn ToValue>>,
-    ) -> CallBuilder;
+    ) -> CallBuilder<'_>;
 
-    fn with_manifest_builder<F>(&mut self, f: F) -> CallBuilder
+    fn with_manifest_builder<F>(&mut self, f: F) -> CallBuilder<'_>
     where
         F: FnOnce(ManifestBuilder) -> ManifestBuilder;
 
-    fn withdraw<R: ResourceReference>(&mut self, resource: R, amount: Decimal) -> CallBuilder;
+    fn withdraw<R: ResourceReference>(&mut self, resource: R, amount: Decimal) -> CallBuilder<'_>;
 }
