@@ -500,7 +500,7 @@ impl TestEngine {
     /// # Arguments
     /// * `vault`: `NodeId` of the vault.
     pub fn vault_balance(&mut self, vault: Vault) -> Decimal {
-        self.engine_interface.fungible_vault_balance(vault.0 .0)
+        self.engine_interface.fungible_vault_balance(vault.0.0)
     }
 
     /// Returns the IDs of the given non-fungible resource owned by the current account.
@@ -521,7 +521,7 @@ impl TestEngine {
     /// # Arguments
     /// * `vault`: `NodeId` of the vault.
     pub fn ids_vault_balance(&mut self, vault: Vault) -> Vec<NonFungibleLocalId> {
-        self.engine_interface.non_fungible_vault_balance(vault.0 .0)
+        self.engine_interface.non_fungible_vault_balance(vault.0.0)
     }
 
     /// Returns the IDs of the given non-fungible resource owned by the given account.
@@ -843,7 +843,7 @@ impl TestEngine {
 
         let mut receipt = receipt.assert_is_success();
 
-        if let TransactionResult::Commit(ref mut commit) = &mut receipt.result {
+        if let TransactionResult::Commit(commit) = &mut receipt.result {
             let mut components: Vec<&ComponentAddress> =
                 commit.new_component_addresses().iter().collect();
             if let Some(component) = components.first() {

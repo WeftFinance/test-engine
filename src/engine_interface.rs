@@ -49,7 +49,13 @@ impl EngineInterface {
     ) -> TransactionReceipt {
         let manifest = ManifestBuilder::new()
             .lock_fee_from_faucet()
-            .publish_package_advanced(None, code, definition, BTreeMap::new(), OwnerRole::None)
+            .publish_package_advanced(
+                None,
+                code,
+                definition,
+                BTreeMap::<String, ManifestMetadataValue>::new(),
+                OwnerRole::None,
+            )
             .build();
 
         self.simulator.execute_manifest(manifest, vec![])
@@ -230,11 +236,11 @@ impl EngineInterface {
                             .to_string(),
                         args: to_manifest_value_and_unwrap!(
                             &FungibleResourceManagerCreateWithInitialSupplyManifestInput {
-                                owner_role: OwnerRole::None,
+                                owner_role: OwnerRole::None.into(),
                                 divisibility: 18,
                                 track_total_supply: false,
                                 metadata: Default::default(),
-                                resource_roles: FungibleResourceRoles::default(),
+                                resource_roles: ManifestFungibleResourceRoles::default(),
                                 initial_supply,
                                 address_reservation: Some(ManifestAddressReservation(0)),
                             }
