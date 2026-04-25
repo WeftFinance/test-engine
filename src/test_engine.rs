@@ -774,10 +774,9 @@ impl TestEngine {
         let receipt = self
             .engine_interface
             .execute_manifest(manifest, with_trace, initial_proofs);
-        if with_update
-            && let TransactionResult::Commit(commit_result) = &receipt.result {
-                self.update_data_from_result(commit_result);
-            }
+        if with_update && let TransactionResult::Commit(commit_result) = &receipt.result {
+            self.update_data_from_result(commit_result);
+        }
         receipt
     }
 
